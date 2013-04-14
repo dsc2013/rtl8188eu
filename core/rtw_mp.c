@@ -1219,7 +1219,8 @@ void SetPacketTx(PADAPTER padapter)
 
 	//3 6. start thread
 #ifdef PLATFORM_LINUX
-	pmp_priv->tx.PktTxThread = kernel_thread(mp_xmit_packet_thread, pmp_priv, CLONE_FS|CLONE_FILES);
+	if(!start_kthread(&pmp_priv->tx.PktTxThread, mp_xmit_packet_thread, pmp_priv, "8188eu-mp-xmit"))
+		DBG_871X("Create PktTx Thread Fail !!!!!\n");
 #endif
 #ifdef PLATFORM_FREEBSD
 {
@@ -1228,9 +1229,11 @@ void SetPacketTx(PADAPTER padapter)
 	pmp_priv->tx.PktTxThread = kproc_kthread_add(mp_xmit_packet_thread, pmp_priv,
 					&p, &td, RFHIGHPID, 0, "MPXmitThread", "MPXmitThread");
 }
+
+if (pmp_priv->tx.PktTxThread < 0)
+	DBG_871X("Create PktTx Thread Fail !!!!!\n");
 #endif
-	if (pmp_priv->tx.PktTxThread < 0)
-		DBG_871X("Create PktTx Thread Fail !!!!!\n");
+
 
 }
 

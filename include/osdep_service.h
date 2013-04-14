@@ -813,6 +813,10 @@ __inline static void _set_workitem(_workitem *pwork)
 	#include <linux/pci.h>
 #endif
 
+
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,7,0))
+	#include <linux/kthread.h>
+#endif
 	
 #ifdef CONFIG_USB_HCI
 	typedef struct urb *  PURB;
@@ -847,7 +851,12 @@ __inline static void _set_workitem(_workitem *pwork)
 	typedef unsigned long _irqL;
 	typedef	struct	net_device * _nic_hdl;
 	
-	typedef pid_t		_thread_hdl_;
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3,7,0))
+  typedef pid_t   _thread_hdl_;
+#else
+  typedef struct task_struct * _thread_hdl_;
+#endif
+
 	typedef int		thread_return;
 	typedef void*	thread_context;
 
@@ -1677,4 +1686,8 @@ extern u64 rtw_division64(u64 x, u64 y);
 
 #endif
 
+#ifdef PLATFORM_LINUX
+extern int start_kthread(_thread_hdl_ *t_hdl, int (*threadfn)(void *data),
+				void *data, const char *name);
+#endif
 
