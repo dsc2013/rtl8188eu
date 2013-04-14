@@ -2,7 +2,7 @@
 
 Linux driver for tplink-wn725n nano wireless adapter.
 
-The source code is from https://github.com/Red54/linux-shumeipai2/tree/sunxi-3.0/drivers/net/wireless/rtl8188eu and updated from the patch https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1030858/+attachment/3465019/+files/use_kthread_run.patch
+The source code is from https://github.com/Red54/linux-shumeipai2/tree/sunxi-3.0/drivers/net/wireless/rtl8188eu and updated from the patch https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1030858/+attachment/3465019/+files/use_kthread_run.patch for kernel 2.7.
 
 ## compile and install
 
